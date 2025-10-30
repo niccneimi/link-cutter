@@ -11,4 +11,5 @@ import com.linkcutter.linkcutter.model.Link;
 public interface LinkRepository extends JpaRepository<Link, Long>{
     Optional<Link> findByOriginalLink(String originalLink);
     Optional<Link> findByShortLinkId(String shortLinkId);
+    Boolean existsByShortLinkId(String shortLinkId);
 }
