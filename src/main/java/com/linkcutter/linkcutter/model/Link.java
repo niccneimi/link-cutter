@@ -24,10 +24,17 @@ public class Link {
     @Column(name = "original_link", unique = true, nullable = false)
     private String originalLink;
 
-    @Column(name = "cutted_link_id", unique = true, nullable = false)
-    private String cuttedLinkId;
+    @Column(name = "short_link_id", unique = true, nullable = false)
+    private String shortLinkId;
 
     @Column(name = "created_at")
     @CreationTimestamp
     private OffsetDateTime createdAt;
+
+    public Link() {}
+
+    public Link(String originalLink, String shortLinkId) {
+        this.originalLink = originalLink;
+        this.shortLinkId = shortLinkId;
+    }
 }
