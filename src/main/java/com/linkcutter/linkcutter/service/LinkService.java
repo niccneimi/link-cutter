@@ -65,6 +65,9 @@ public class LinkService {
     }
 
     private String generateRandomString(int stringLength) {
+        if (stringLength < 1) {
+            throw new InsufficientSystemStateException("System state insufficient to generate new links due improper configuration");
+        }
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < stringLength; i++) {
             int randCharAt = random.nextInt(DATA_FOR_RANDOM_STRING.length());
