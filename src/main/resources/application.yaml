@@ -1,6 +1,6 @@
 spring:
     application:
-        name: 127.0.0.1:8080
+        name: linkcutter
 
     datasource:
         url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${POSTGRES_DB}

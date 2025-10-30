@@ -10,7 +10,7 @@ public class AppConfig {
     @Value("${SHORT_LINK_ID_LENGTH}")
     private int shortLinkIdLength;
 
-    @Value("${spring.application.name}")
+    @Value("${APP_DOMAIN_NAME}")
     private String appDomainName;
 
     @Bean

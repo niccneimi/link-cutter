@@ -42,7 +42,7 @@ public class LinkService {
             linkRepository.save(newLink);
         }
 
-        String shortLink = "http://" + properties.getAppDomainName() + "/" + shortLinkId;
+        String shortLink = "https://" + properties.getAppDomainName() + "/" + shortLinkId;
         
         return ShortLinkResponse.builder()
                 .shortLink(shortLink)

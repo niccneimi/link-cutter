@@ -40,7 +40,7 @@ public class LinkServiceTest {
 
         ShortLinkResponse response = linkService.createShortLink(originalLink);
 
-        assertTrue(response.getShortLink().startsWith("http://" + appDomainName + "/"));
+        assertTrue(response.getShortLink().startsWith("https://" + appDomainName + "/"));
         verify(linkRepository).save(any(Link.class));
         verify(linkRepository).findByOriginalLink(originalLink);
         verify(linkRepository).existsByShortLinkId(anyString());
