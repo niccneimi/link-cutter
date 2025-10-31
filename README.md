@@ -21,7 +21,7 @@ POSTGRES_DB=mydatabase
 POSTGRES_USER=myuser
 POSTGRES_PASSWORD=securepassword
 SHORT_LINK_ID_LENGTH=10
-APP_DOMAIN_NAME=freeton.ru.tuna.am
+APP_DOMAIN_NAME=lc.ru.tuna.am
 ```
 3. Запустите приложение и базу данных с помощью Docker Compose:
 ```bash
@@ -37,7 +37,16 @@ docker compose ps
 ```bash
 docker compose down
 ```
+## Пример использования
 
+#### Создание короткой ссылки
+```bash
+curl -X POST -H "Content-Type: application/json" -d '{"link":"https://www.youtube.com/watch?v=dQw4w9WgXcQ"}' https://lc.ru.tuna.am/api/link
+
+```
+#### Переход по сокращенной ссылке
+
+https://lc.ru.tuna.am/s8omr8pozg
 
 ## Особенности
 
