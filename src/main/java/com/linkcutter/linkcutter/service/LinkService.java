@@ -4,6 +4,8 @@ import java.net.URI;
 import java.security.SecureRandom;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.linkcutter.linkcutter.config.LinkServiceProperties;
@@ -18,6 +20,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LinkService {
 
+    private static final Logger logger = LoggerFactory.getLogger(LinkService.class);
+
     private static final String DATA_FOR_RANDOM_STRING = "abcdefghijklmnopqrstuvwxyz1234567890";
     private static final SecureRandom random = new SecureRandom();
 
@@ -25,8 +29,10 @@ public class LinkService {
     private final LinkServiceProperties properties;
 
     public ShortLinkResponse createShortLink(String link) {
+        logger.info("Creating short link for: {}", link);
 
         if (!isValidLink(link)) {
+            logger.warn("Invalid link attemted: {}", link);
             throw new IllegalArgumentException("Not valid link: " + link);
         }
 
@@ -36,13 +42,16 @@ public class LinkService {
         if (existingLinkOptional.isPresent()) {
             Link existingLink = existingLinkOptional.get();
             shortLinkId = existingLink.getShortLinkId();
+            logger.info("Link already exists. Using shortLinkId: {}", shortLinkId);
         } else {
             shortLinkId = generateRandomUniqueString(properties.getShortLinkIdLength());
             Link newLink = new Link(link, shortLinkId);
             linkRepository.save(newLink);
+            logger.info("Created new short link with id: {}", shortLinkId);
         }
 
         String shortLink = "https://" + properties.getAppDomainName() + "/" + shortLinkId;
+        logger.debug("Generated short link: {}", shortLink);
         
         return ShortLinkResponse.builder()
                 .shortLink(shortLink)
@@ -57,6 +66,7 @@ public class LinkService {
             generatedString = generateRandomString(stringLength);
             attempts++;
             if (attempts > 20) {
+                logger.warn("Reached max attempts (20) to generate unique link ID");
                 throw new InsufficientSystemStateException("System state insufficient to generate new links due improper configuration");
             }
         } while (linkRepository.existsByShortLinkId(generatedString));
@@ -66,6 +76,7 @@ public class LinkService {
 
     private String generateRandomString(int stringLength) {
         if (stringLength < 1) {
+            logger.error("SHORT_LINK_ID_LENGTH bad initialization");
             throw new InsufficientSystemStateException("System state insufficient to generate new links due improper configuration");
         }
         StringBuilder sb = new StringBuilder();

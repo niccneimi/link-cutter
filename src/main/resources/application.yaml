@@ -17,3 +17,7 @@ spring:
 
     config:
         import: application-secrets.yaml
+
+logging:
+  level:
+    com.linkcutter.linkcutter: INFO
