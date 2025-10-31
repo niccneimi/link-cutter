@@ -20,6 +20,8 @@ DB_PORT=5432
 POSTGRES_DB=mydatabase
 POSTGRES_USER=myuser
 POSTGRES_PASSWORD=securepassword
+SHORT_LINK_ID_LENGTH=10
+APP_DOMAIN_NAME=freeton.ru.tuna.am
 ```
 3. Запустите приложение и базу данных с помощью Docker Compose:
 ```bash
