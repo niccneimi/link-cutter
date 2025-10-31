@@ -16,7 +16,7 @@ public class RedirectController {
 
     private RedirectService redirectService;
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id:[a-zA-Z0-9]+}")
     public ResponseEntity<Void> redirect(@PathVariable String id) {
         return new ResponseEntity<>(redirectService.redirect(id), HttpStatus.MOVED_PERMANENTLY);
     }

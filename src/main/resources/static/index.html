@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <title>LinkCutter</title>
+    <style>
+        :root {
+            --accent: #e30611;
+            --accent-hover: #c1000d;
+            --bg: #ffffff;
+            --text: #1a1a1a;
+            --border: #e5e5e5;
+        }
+
+        * {
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+
+        body {
+            font-family: "Inter", system-ui, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 380px;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.7rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 14px;
+            font-size: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(227, 6, 17, 0.15);
+        }
+
+        button {
+            width: 100%;
+            margin-top: 12px;
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            background-color: var(--accent);
+            color: white;
+        }
+
+        button:hover {
+            background-color: var(--accent-hover);
+        }
+
+        #result {
+            margin-top: 1.2em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        #shortLink {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            word-break: break-word;
+        }
+
+        #shortLink:hover {
+            text-decoration: underline;
+        }
+
+        #copyBtn {
+            padding: 6px 10px;
+            font-size: 0.9rem;
+            border: 1px solid var(--accent);
+            background-color: #fff;
+            color: var(--accent);
+            border-radius: 6px;
+        }
+
+        #copyBtn:hover {
+            background-color: var(--accent);
+            color: #fff;
+        }
+
+        #error {
+            margin-top: 1rem;
+            color: #d32f2f;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem;
+                border-radius: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>LinkCutter</h1>
+        <input id="inputLink" type="text" placeholder="Вставьте ссылку..." />
+        <button id="shortenBtn">Сократить</button>
+        <div id="result" style="display:none;">
+            <a id="shortLink" href="#" target="_blank" rel="noopener noreferrer"></a>
+            <button id="copyBtn">Копировать</button>
+        </div>
+        <div id="error" style="display:none;"></div>
+    </div>
+
+    <script>
+        const shortenBtn = document.getElementById('shortenBtn');
+        const inputLink = document.getElementById('inputLink');
+        const result = document.getElementById('result');
+        const shortLink = document.getElementById('shortLink');
+        const copyBtn = document.getElementById('copyBtn');
+        const errorDiv = document.getElementById('error');
+
+        shortenBtn.addEventListener('click', () => {
+            errorDiv.style.display = 'none';
+            result.style.display = 'none';
+            const link = inputLink.value.trim();
+            if (!link) {
+                errorDiv.textContent = 'Введите ссылку.';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            fetch('/api/link', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ link })
+            })
+            .then(async response => {
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Ошибка сервера');
+                }
+                return response.json();
+            })
+            .then(data => {
+                shortLink.textContent = data.shortLink;
+                shortLink.href = data.shortLink;
+                result.style.display = 'flex';
+            })
+            .catch(err => {
+                errorDiv.textContent = err.message;
+                errorDiv.style.display = 'block';
+            });
+        });
+
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(shortLink.textContent)
+              .then(() => {
+                  copyBtn.textContent = 'Скопировано!';
+                  setTimeout(() => copyBtn.textContent = 'Копировать', 1500);
+              })
+              .catch(() => {
+                  copyBtn.textContent = 'Ошибка';
+              });
+        });
+    </script>
+</body>
+</html>
