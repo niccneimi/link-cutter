@@ -40,10 +40,25 @@ public class LinkService {
 
         Optional<Link> existingLinkOptional = linkRepository.findByOriginalLink(link);
         if (existingLinkOptional.isPresent()) {
+
             Link existingLink = existingLinkOptional.get();
             shortLinkId = existingLink.getShortLinkId();
-            logger.info("Link already exists. Using shortLinkId: {}", shortLinkId);
+
+            if (shortLinkId.length() != properties.getShortLinkIdLength()) {
+                logger.warn("Existing shortLinkId length ({}) does not match desired length ({}). Generating new one.",
+                        existingLink.getShortLinkId().length(), properties.getShortLinkIdLength());
+
+                shortLinkId = generateRandomUniqueString(properties.getShortLinkIdLength());
+                existingLink.setShortLinkId(shortLinkId);
+                linkRepository.save(existingLink);
+                
+                logger.info("Change shortLinkId for {} to {}", link, shortLinkId);
+            } else {
+                logger.info("Link already exists. Using shortLinkId: {}", shortLinkId);
+            }
+
         } else {
+            
             shortLinkId = generateRandomUniqueString(properties.getShortLinkIdLength());
             Link newLink = new Link(link, shortLinkId);
             linkRepository.save(newLink);
@@ -52,7 +67,7 @@ public class LinkService {
 
         String shortLink = "https://" + properties.getAppDomainName() + "/" + shortLinkId;
         logger.debug("Generated short link: {}", shortLink);
-        
+
         return ShortLinkResponse.builder()
                 .shortLink(shortLink)
                 .build();
@@ -67,7 +82,8 @@ public class LinkService {
             attempts++;
             if (attempts > 20) {
                 logger.warn("Reached max attempts (20) to generate unique link ID");
-                throw new InsufficientSystemStateException("System state insufficient to generate new links due improper configuration");
+                throw new InsufficientSystemStateException(
+                        "System state insufficient to generate new links due improper configuration");
             }
         } while (linkRepository.existsByShortLinkId(generatedString));
 
@@ -77,7 +93,8 @@ public class LinkService {
     private String generateRandomString(int stringLength) {
         if (stringLength < 1) {
             logger.error("SHORT_LINK_ID_LENGTH bad initialization");
-            throw new InsufficientSystemStateException("System state insufficient to generate new links due improper configuration");
+            throw new InsufficientSystemStateException(
+                    "System state insufficient to generate new links due improper configuration");
         }
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < stringLength; i++) {
