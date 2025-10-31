@@ -46,7 +46,7 @@ curl -X POST -H "Content-Type: application/json" -d '{"link":"https://www.youtub
 ```
 #### Переход по сокращенной ссылке
 
-https://lc.ru.tuna.am/s8omr8pozg
+https://lc.ru.tuna.am/w2gh0
 
 ## Особенности
 
