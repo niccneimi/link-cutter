@@ -21,7 +21,7 @@ public class Link {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "original_link", unique = true, nullable = false)
+    @Column(name = "original_link", unique = true, nullable = false, columnDefinition = "text")
     private String originalLink;
 
     @Column(name = "short_link_id", unique = true, nullable = false)
