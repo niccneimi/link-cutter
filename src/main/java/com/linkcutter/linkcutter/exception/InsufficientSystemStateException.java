@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class InsufficientSystemStateException extends RuntimeException {
-    private String message;
+    private final String message;
 
     public InsufficientSystemStateException(String message) {
         super(message);
