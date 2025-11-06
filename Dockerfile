@@ -4,7 +4,7 @@ COPY pom.xml .
 COPY src ./src
 RUN mvn clean package -DskipTests
 
-FROM openjdk:21-jdk-slim
+FROM openjdk:26-ea-21-jdk-slim-trixie
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
