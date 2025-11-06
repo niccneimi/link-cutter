@@ -44,11 +44,11 @@ public class LinkService {
             Link existingLink = existingLinkOptional.get();
             shortLinkId = existingLink.getShortLinkId();
 
-            if (shortLinkId.length() != properties.getShortLinkIdLength()) {
+            if (shortLinkId.length() != properties.shortLinkIdLength()) {
                 logger.warn("Existing shortLinkId length ({}) does not match desired length ({}). Generating new one.",
-                        existingLink.getShortLinkId().length(), properties.getShortLinkIdLength());
+                        existingLink.getShortLinkId().length(), properties.shortLinkIdLength());
 
-                shortLinkId = generateRandomUniqueString(properties.getShortLinkIdLength());
+                shortLinkId = generateRandomUniqueString(properties.shortLinkIdLength());
                 existingLink.setShortLinkId(shortLinkId);
                 linkRepository.save(existingLink);
                 
@@ -59,13 +59,13 @@ public class LinkService {
 
         } else {
             
-            shortLinkId = generateRandomUniqueString(properties.getShortLinkIdLength());
+            shortLinkId = generateRandomUniqueString(properties.shortLinkIdLength());
             Link newLink = new Link(link, shortLinkId);
             linkRepository.save(newLink);
             logger.info("Created new short link with id: {}", shortLinkId);
         }
 
-        String shortLink = "https://" + properties.getAppDomainName() + "/" + shortLinkId;
+        String shortLink = "https://" + properties.appDomainName() + "/" + shortLinkId;
         logger.debug("Generated short link: {}", shortLink);
 
         return ShortLinkResponse.builder()
