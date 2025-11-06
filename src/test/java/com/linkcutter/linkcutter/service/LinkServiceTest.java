@@ -12,8 +12,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.linkcutter.linkcutter.config.LinkServiceProperties;
-import com.linkcutter.linkcutter.entity.ShortLinkResponse;
-import com.linkcutter.linkcutter.model.Link;
+import com.linkcutter.linkcutter.entity.Link;
+import com.linkcutter.linkcutter.model.ShortLinkResponse;
 import com.linkcutter.linkcutter.repository.LinkRepository;
 
 public class LinkServiceTest {

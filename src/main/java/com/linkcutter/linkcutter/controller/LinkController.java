@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.linkcutter.linkcutter.entity.LinkRequest;
-import com.linkcutter.linkcutter.entity.ShortLinkResponse;
+import com.linkcutter.linkcutter.model.LinkRequest;
+import com.linkcutter.linkcutter.model.ShortLinkResponse;
 import com.linkcutter.linkcutter.service.LinkService;
 
 import lombok.AllArgsConstructor;

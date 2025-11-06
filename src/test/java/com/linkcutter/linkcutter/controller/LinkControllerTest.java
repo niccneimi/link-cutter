@@ -13,8 +13,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.linkcutter.linkcutter.entity.LinkRequest;
-import com.linkcutter.linkcutter.entity.ShortLinkResponse;
+import com.linkcutter.linkcutter.model.LinkRequest;
+import com.linkcutter.linkcutter.model.ShortLinkResponse;
 import com.linkcutter.linkcutter.service.LinkService;
 
 public class LinkControllerTest {

@@ -9,9 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.linkcutter.linkcutter.config.LinkServiceProperties;
-import com.linkcutter.linkcutter.entity.ShortLinkResponse;
+import com.linkcutter.linkcutter.entity.Link;
 import com.linkcutter.linkcutter.exception.InsufficientSystemStateException;
-import com.linkcutter.linkcutter.model.Link;
+import com.linkcutter.linkcutter.model.ShortLinkResponse;
 import com.linkcutter.linkcutter.repository.LinkRepository;
 
 import lombok.RequiredArgsConstructor;

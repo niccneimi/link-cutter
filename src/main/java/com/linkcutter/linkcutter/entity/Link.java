@@ -1,4 +1,4 @@
-package com.linkcutter.linkcutter.model;
+package com.linkcutter.linkcutter.entity;
 
 import java.time.OffsetDateTime;
 

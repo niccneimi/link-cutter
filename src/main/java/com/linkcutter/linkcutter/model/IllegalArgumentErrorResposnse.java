@@ -1,4 +1,4 @@
-package com.linkcutter.linkcutter.entity;
+package com.linkcutter.linkcutter.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

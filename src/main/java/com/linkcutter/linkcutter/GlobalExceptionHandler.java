@@ -5,11 +5,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.linkcutter.linkcutter.entity.IllegalArgumentErrorResposnse;
-import com.linkcutter.linkcutter.entity.InsufficientSystemErrorResponse;
-import com.linkcutter.linkcutter.entity.NotFoundErrorResponse;
 import com.linkcutter.linkcutter.exception.InsufficientSystemStateException;
 import com.linkcutter.linkcutter.exception.ShortLinkNotFoundException;
+import com.linkcutter.linkcutter.model.IllegalArgumentErrorResposnse;
+import com.linkcutter.linkcutter.model.InsufficientSystemErrorResponse;
+import com.linkcutter.linkcutter.model.NotFoundErrorResponse;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {

@@ -14,8 +14,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 
+import com.linkcutter.linkcutter.entity.Link;
 import com.linkcutter.linkcutter.exception.ShortLinkNotFoundException;
-import com.linkcutter.linkcutter.model.Link;
 import com.linkcutter.linkcutter.repository.LinkRepository;
 
 public class RedirectServiceTest {
